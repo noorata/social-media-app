@@ -1,11 +1,15 @@
-import './styles/main.scss';
+import { BrowserRouter as Router } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import AppRoutes from "./AppRoutes";
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <h1>Hello, Vite + React + TypeScript + Sass!</h1>
-    </div>
+    <Router>
+      <MainLayout>
+        <AppRoutes />
+      </MainLayout>
+    </Router>
   );
-}
+};
 
 export default App;

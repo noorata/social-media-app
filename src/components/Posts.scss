@@ -1,0 +1,69 @@
+@use '../styles/variables' as *;
+
+.posts {
+  .card {
+    border: none;
+    border-radius: 10px;
+
+    .post-img-wrapper {
+      background-color: $post-background;
+      padding: 10px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .post-img {
+      border-radius: 10px;
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .tags {
+      font-size: 14px;
+
+      span {
+        font-weight: 500;
+      }
+    }
+
+    .likes-comments {
+      margin-left: auto;
+      font-size: 16px;
+      text-align: right;
+
+      i {
+        color: $secondary-color;
+      }
+    }
+
+    h6 {
+      margin-bottom: 0;
+      font-size: 16px;
+    }
+  }
+
+  .feeds-nav {
+    a {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .post-img {
+      height: 150px;
+    }
+
+    .tags {
+      font-size: 12px;
+    }
+
+    .likes-comments {
+      font-size: 14px;
+    }
+  }
+}

@@ -1,6 +1,6 @@
-@import 'bootstrap/scss/bootstrap';
+@use 'bootstrap' as *;
+@use './styles/variables' as *;
+
 body {
   font-family: 'Arial', sans-serif;
 }
-@import './styles/variables';
-

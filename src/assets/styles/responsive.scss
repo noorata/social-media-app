@@ -1,0 +1,29 @@
+
+.post-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  @media (max-width: 576px) {
+    .post-img {
+      height: 120px !important;
+    }
+  
+    .posts .card .card-body p {
+      font-size: 0.9rem;
+    }
+  
+    .posts .card .card-body .text-primary {
+      font-size: 0.85rem;
+    }
+  
+    .posts .card .card-body .d-flex.flex-wrap {
+      max-width: 200px;
+    }
+  
+    .feeds-nav a {
+      font-size: 0.9rem;
+    }
+  }
+  

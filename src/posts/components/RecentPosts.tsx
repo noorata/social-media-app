@@ -8,15 +8,7 @@ const RecentPosts: React.FC = () => {
     <div className="row g-3">
       {posts.map((post) => (
         <div className="col-12 col-md-6" key={post.id}>
-          <Post
-            author={post.author}
-            authorImg={post.authorImg}
-            img={post.img}
-            likes={post.likes}
-            comments={post.comments}
-            tags={post.tags}
-            content={post.content}
-          />
+          <Post post={post} />
         </div>
       ))}
     </div>

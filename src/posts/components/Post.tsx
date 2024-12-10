@@ -1,8 +1,6 @@
-import "../../assets/styles/responsive.scss"; // تأكد من المسار الصحيح
+import "../../assets/styles/responsive.scss";
 
-import React from "react";
-
-interface PostProps {
+interface Post {
   author: string;
   authorImg: string;
   img: string;
@@ -12,15 +10,13 @@ interface PostProps {
   content: string;
 }
 
-const Post: React.FC<PostProps> = ({
-  author,
-  authorImg,
-  img,
-  likes,
-  comments,
-  tags,
-  content,
-}) => {
+interface PostProps {
+  post: Post;
+}
+
+const Post = ({ post }: PostProps) => {
+  const { author, authorImg, img, likes, comments, tags, content } = post;
+
   return (
     <div className="card shadow-sm border-0 rounded overflow-hidden">
       {/*post image*/}

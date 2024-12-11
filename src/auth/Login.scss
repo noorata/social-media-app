@@ -1,0 +1,16 @@
+.btn-primary {
+  background-color: #f8a5c2 !important;
+  border: none;
+
+  &:hover {
+    background-color: #f48fb1 !important;
+  }
+}
+
+a {
+  color: #f8a5c2 !important;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

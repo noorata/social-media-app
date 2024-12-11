@@ -1,6 +1,11 @@
+import React from "react";
 import "../../assets/styles/Toolbar.scss";
+import { useAuth } from "../../auth/context/auth-store";
 
 const Toolbar: React.FC = () => {
+  const { username } = useAuth();
+  console.log("Toolbar username:", username);
+
   return (
     <div className="d-flex align-items-center gap-3">
       {/*user icon*/}
@@ -26,6 +31,9 @@ const Toolbar: React.FC = () => {
           className="img-fluid w-100 h-100 object-cover"
         />
       </div>
+      {username && (
+        <span className="text-dark fw-bold fs-6">Welcome, {username}!</span>
+      )}
     </div>
   );
 };

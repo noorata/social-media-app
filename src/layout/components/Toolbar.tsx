@@ -3,7 +3,7 @@ import "../../assets/styles/Toolbar.scss";
 import { useAuth } from "../../auth/context/auth-store";
 
 const Toolbar: React.FC = () => {
-  const { username } = useAuth();
+  const { username, logout } = useAuth();
   console.log("Toolbar username:", username);
 
   return (
@@ -31,8 +31,21 @@ const Toolbar: React.FC = () => {
           className="img-fluid w-100 h-100 object-cover"
         />
       </div>
-      {username && (
-        <span className="text-dark fw-bold fs-6">Welcome, {username}!</span>
+
+      {/*username and logout button*/}
+      {username ? (
+        <>
+          <span className="text-dark fw-bold fs-6">Welcome, {username}!</span>
+          <button
+            className="btn btn-outline-danger btn-sm"
+            onClick={logout}
+            title="Logout"
+          >
+            Logout
+          </button>
+        </>
+      ) : (
+        <span className="text-muted fs-6">Not logged in</span>
       )}
     </div>
   );

@@ -6,10 +6,10 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const { username, login } = useAuthLogic();
+  const { username, login, logout } = useAuthLogic();
 
   return (
-    <AuthContext.Provider value={{ username, login }}>
+    <AuthContext.Provider value={{ username, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

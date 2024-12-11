@@ -1,17 +1,8 @@
 import "../../assets/styles/responsive.scss";
-
-interface Post {
-  author: string;
-  authorImg: string;
-  img: string;
-  likes: number;
-  comments: number;
-  tags: string[];
-  content: string;
-}
+import { Post as PostType } from "../posts.types";
 
 interface PostProps {
-  post: Post;
+  post: PostType;
 }
 
 const Post = ({ post }: PostProps) => {

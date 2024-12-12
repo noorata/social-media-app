@@ -1,11 +1,11 @@
 import "../../assets/styles/responsive.scss";
-import { Post as PostType } from "../posts.types";
+import { Post } from "../posts.types";
 
-interface PostProps {
-  post: PostType;
+interface PostCardProps {
+  post: Post;
 }
 
-const Post = ({ post }: PostProps) => {
+const PostCard = ({ post }: PostCardProps) => {
   const { author, authorImg, img, likes, comments, tags, content } = post;
 
   return (
@@ -54,4 +54,4 @@ const Post = ({ post }: PostProps) => {
   );
 };
 
-export default Post;
+export default PostCard;

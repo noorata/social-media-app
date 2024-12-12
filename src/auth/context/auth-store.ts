@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { login as loginService, logout as logoutService, getStoredUsername } from "../services/login.service";
 
 export interface AuthContextType {
   username: string;
@@ -19,27 +20,16 @@ export const useAuth = (): AuthContextType => {
 };
 
 export const useAuthLogic = () => {
-  const [username, setUsername] = useState(() => {
-    const storedUsername = localStorage.getItem("username");
-    const expiration = localStorage.getItem("expiration");
-    if (storedUsername && expiration && new Date(expiration) > new Date()) {
-      return storedUsername;
-    }
-    return "";
-  });
+  const [username, setUsername] = useState(() => getStoredUsername());
 
   const login = (username: string) => {
+    loginService(username);
     setUsername(username);
-    localStorage.setItem("username", username);
-    const expiration = new Date();
-    expiration.setHours(expiration.getHours() + 1);
-    localStorage.setItem("expiration", expiration.toISOString());
   };
 
   const logout = () => {
+    logoutService();
     setUsername("");
-    localStorage.removeItem("username");
-    localStorage.removeItem("expiration");
   };
 
   useEffect(() => {

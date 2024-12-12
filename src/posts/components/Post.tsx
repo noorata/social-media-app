@@ -1,20 +1,11 @@
 import "../../assets/styles/responsive.scss";
+import { Post } from "../posts.types";
 
-interface Post {
-  author: string;
-  authorImg: string;
-  img: string;
-  likes: number;
-  comments: number;
-  tags: string[];
-  content: string;
-}
-
-interface PostProps {
+interface PostCardProps {
   post: Post;
 }
 
-const Post = ({ post }: PostProps) => {
+const PostCard = ({ post }: PostCardProps) => {
   const { author, authorImg, img, likes, comments, tags, content } = post;
 
   return (
@@ -63,4 +54,4 @@ const Post = ({ post }: PostProps) => {
   );
 };
 
-export default Post;
+export default PostCard;

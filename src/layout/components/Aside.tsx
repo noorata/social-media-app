@@ -9,13 +9,13 @@ const Aside: React.FC = () => {
     >
       {/*navigation menu*/}
       <ul className="list-unstyled mb-4">
-        <li className="py-3 px-4 d-flex align-items-center rounded hover-effect">
+        <li className="py-3 px-3 d-flex align-items-center rounded hover-effect">
           <i className="fas fa-home me-3 text-muted"></i>
           <Link to="/" className="text-black text-decoration-none fw-semibold">
             Feed
           </Link>
         </li>
-        <li className="py-3 px-4 d-flex align-items-center rounded hover-effect">
+        <li className="py-3 px-3 d-flex align-items-center rounded hover-effect">
           <i className="fas fa-user-friends me-3 text-muted"></i>
           <Link
             to="/friends"
@@ -24,7 +24,7 @@ const Aside: React.FC = () => {
             Friends
           </Link>
         </li>
-        <li className="py-3 px-4 d-flex align-items-center rounded hover-effect">
+        <li className="py-3 px-3 d-flex align-items-center rounded hover-effect">
           <i className="fas fa-calendar-alt me-3 text-muted"></i>
           <Link
             to="/events"
@@ -33,7 +33,7 @@ const Aside: React.FC = () => {
             Event
           </Link>
         </li>
-        <li className="py-3 px-4 d-flex align-items-center rounded hover-effect">
+        <li className="py-3 px-3 d-flex align-items-center rounded hover-effect">
           <i className="fas fa-photo-video me-3 text-muted"></i>
           <Link
             to="/videos"
@@ -42,13 +42,22 @@ const Aside: React.FC = () => {
             Watch Videos
           </Link>
         </li>
-        <li className="py-3 px-4 d-flex align-items-center rounded hover-effect">
+        <li className="py-3 px-3 d-flex align-items-center rounded hover-effect">
           <i className="fas fa-file me-3 text-muted"></i>
           <Link
             to="/files"
             className="text-black text-decoration-none fw-semibold"
           >
             Files
+          </Link>
+        </li>
+        <li className="py-3 px-3 d-flex align-items-center rounded hover-effect">
+          <i className="fas fa-file me-3 text-muted"></i>
+          <Link
+            to="/posts-management"
+            className="text-black text-decoration-none fw-semibold"
+          >
+            Posts Management
           </Link>
         </li>
       </ul>

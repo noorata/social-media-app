@@ -1,14 +1,15 @@
 import React from "react";
 import { posts } from "../posts-data";
-import Post from "./Post";
+import PostCard from "./Post";
+import { Post } from "../posts.types";
 import "../../assets/styles/responsive.scss";
 
 const RecentPosts: React.FC = () => {
   return (
     <div className="row g-3">
-      {posts.map((post) => (
+      {posts.map((post: Post) => (
         <div className="col-12 col-md-6" key={post.id}>
-          <Post post={post} />
+          <PostCard post={post} />
         </div>
       ))}
     </div>

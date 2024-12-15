@@ -20,6 +20,7 @@
     "react-bootstrap": "^2.10.7",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.0.2",
+    "react-toastify": "^10.0.6",
     "sass": "^1.82.0"
   },
   "devDependencies": {

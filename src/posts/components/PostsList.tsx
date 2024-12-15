@@ -3,6 +3,8 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import dayjs from "dayjs";
 import clsx from "clsx";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "../../assets/styles/responsive.scss";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/saga-blue/theme.css";
@@ -14,30 +16,36 @@ const PostsList: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
   //fetch posts on component mount
-  useEffect(() => {
-    const fetchPosts = async () => {
+  const fetchPosts = async () => {
+    try {
       const allPosts = await getAllPosts();
       setPosts(allPosts);
-    };
-    fetchPosts();
-  }, []);
+    } catch (error) {
+      toast.error("Failed to fetch posts, please try again");
+      console.error("Error fetching posts:", error);
+    }
+  };
 
   //handle post deletion
   const handleDelete = async (id: number) => {
-    await removePost(id);
-    const updatedPosts = await getAllPosts();
-    setPosts(updatedPosts);
+    try {
+      await removePost(id);
+      toast.success("Post deleted successfully!");
+      fetchPosts();
+    } catch (error) {
+      toast.error("Failed to delete the post. Please try again.");
+      console.error("Error deleting post:", error);
+    }
   };
 
   //render status badge
   const statusTemplate = (rowData: Post) => (
     <span
-      className={clsx(
-        "badge p-2 text-uppercase",
-        rowData.status === "published" && "bg-success",
-        rowData.status === "draft" && "bg-warning text-dark",
-        rowData.status === "deleted" && "bg-danger"
-      )}
+      className={clsx("badge p-2 text-uppercase", {
+        "bg-success": rowData.status === "published",
+        "bg-warning text-dark": rowData.status === "draft",
+        "bg-danger": rowData.status === "deleted",
+      })}
     >
       {rowData.status.toUpperCase()}
     </span>
@@ -46,11 +54,11 @@ const PostsList: React.FC = () => {
   //render tags
   const tagsTemplate = (rowData: Post) => (
     <div className="d-flex flex-wrap">
-      {rowData.tags.map((tag, index) => (
+      {rowData.tags?.map((tag, index) => (
         <span key={index} className="badge bg-primary me-1 mb-1">
           {tag}
         </span>
-      ))}
+      )) || <span>No Tags</span>}
     </div>
   );
 
@@ -83,32 +91,47 @@ const PostsList: React.FC = () => {
     </button>
   );
 
+  useEffect(() => {
+    fetchPosts();
+  }, []);
+
   return (
-    <div className="container-fluid mt-4">
-      <h2 className="mb-4">Posts Management</h2>
-      <div className="table-responsive">
-        <DataTable
-          value={posts}
-          paginator
-          rows={5}
-          responsiveLayout="stack"
-          className="shadow"
-        >
-          <Column field="id" header="ID" style={{ width: "5%" }}></Column>
-          <Column field="title" header="Title"></Column>
-          <Column field="description" header="Description"></Column>
-          <Column
-            field="dateCreated"
-            header="Created At"
-            body={dateTemplate}
-          ></Column>
-          <Column field="status" header="Status" body={statusTemplate}></Column>
-          <Column field="tags" header="Tags" body={tagsTemplate}></Column>
-          <Column field="author" header="Author" body={authorTemplate}></Column>
-          <Column body={deleteTemplate} header="Actions"></Column>
-        </DataTable>
+    <>
+      <ToastContainer />
+      <div className="container-fluid mt-4">
+        <h2 className="mb-4">Posts Management</h2>
+        <div className="table-responsive">
+          <DataTable
+            value={posts}
+            paginator
+            rows={5}
+            responsiveLayout="stack"
+            className="shadow"
+          >
+            <Column field="id" header="ID" style={{ width: "5%" }}></Column>
+            <Column field="title" header="Title"></Column>
+            <Column field="description" header="Description"></Column>
+            <Column
+              field="dateCreated"
+              header="Created At"
+              body={dateTemplate}
+            ></Column>
+            <Column
+              field="status"
+              header="Status"
+              body={statusTemplate}
+            ></Column>
+            <Column field="tags" header="Tags" body={tagsTemplate}></Column>
+            <Column
+              field="author"
+              header="Author"
+              body={authorTemplate}
+            ></Column>
+            <Column body={deleteTemplate} header="Actions"></Column>
+          </DataTable>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

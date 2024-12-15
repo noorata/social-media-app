@@ -8,7 +8,7 @@ const RecentPosts: React.FC = () => {
   return (
     <div className="row g-3">
       {posts.map((post: Post) => (
-        <div className="col-12 col-md-6" key={post.id}>
+        <div className="col-12 col-md-6 col-lg-4" key={post.id}>
           <PostCard post={post} />
         </div>
       ))}

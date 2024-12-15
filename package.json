@@ -17,6 +17,7 @@
     "primeicons": "^7.0.0",
     "primereact": "^10.8.5",
     "react": "^19.0.0",
+    "react-bootstrap": "^2.10.7",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.0.2",
     "sass": "^1.82.0"

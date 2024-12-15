@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import dayjs from "dayjs";
@@ -11,9 +11,11 @@ import "primereact/resources/themes/saga-blue/theme.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Post } from "../posts.types";
 import { getAllPosts, removePost } from "../posts-api";
+import { usePostsStore } from "../posts-store";
+import PostsFilters from "./PostsFilters";
 
 const PostsList: React.FC = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const { filteredTransactions, setPosts } = usePostsStore();
 
   //fetch posts on component mount
   const fetchPosts = async () => {
@@ -100,9 +102,10 @@ const PostsList: React.FC = () => {
       <ToastContainer />
       <div className="container-fluid mt-4">
         <h2 className="mb-4">Posts Management</h2>
+        <PostsFilters />
         <div className="table-responsive">
           <DataTable
-            value={posts}
+            value={filteredTransactions} // Display filtered posts
             paginator
             rows={5}
             responsiveLayout="stack"

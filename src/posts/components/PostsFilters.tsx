@@ -1,31 +1,38 @@
 import React from "react";
 import { usePostsStore } from "../posts-store";
+import { Dropdown } from "primereact/dropdown";
+import { InputText } from "primereact/inputtext";
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primereact/resources/primereact.css";
 
 const PostsFilters: React.FC = () => {
   const { setStatusFilter, setSearchFilter, statusFilter, searchFilter } =
     usePostsStore();
 
+  const statusOptions = [
+    { label: "All", value: "" },
+    { label: "Draft", value: "draft" },
+    { label: "Published", value: "published" },
+    { label: "Deleted", value: "deleted" },
+  ];
   return (
     <div className="mb-3 d-flex gap-3">
       {/*filter by status*/}
-      <select
+      <Dropdown
         value={statusFilter}
-        onChange={(e) => setStatusFilter(e.target.value)}
-        className="form-select w-25"
-      >
-        <option value="">All</option>
-        <option value="draft">Draft</option>
-        <option value="published">Published</option>
-        <option value="deleted">Deleted</option>
-      </select>
+        options={statusOptions}
+        onChange={(e) => setStatusFilter(e.value)}
+        placeholder="Filter by status"
+        className="w-25"
+      />
 
       {/*search field*/}
-      <input
-        type="text"
+      <InputText
         value={searchFilter}
         placeholder="Search by title or tags"
         onChange={(e) => setSearchFilter(e.target.value)}
-        className="form-control w-50"
+        className="w-50"
       />
     </div>
   );

@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { addPost } from "../posts-api";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const validationSchema = Yup.object({
@@ -49,7 +49,6 @@ const NewPost: React.FC = () => {
 
   return (
     <div className="container mt-5">
-      <ToastContainer />
       <h2 className="mb-4">Create New Post</h2>
 
       <Formik
@@ -59,58 +58,60 @@ const NewPost: React.FC = () => {
       >
         {({ isSubmitting }) => (
           <Form className="shadow p-4 bg-light rounded">
-            <div className="mb-3">
-              <label htmlFor="title" className="form-label">
-                Title
-              </label>
-              <Field
-                type="text"
-                name="title"
-                className="form-control"
-                placeholder="Enter post title"
-              />
-              <ErrorMessage
-                name="title"
-                component="div"
-                className="text-danger"
-              />
-            </div>
+            <fieldset className="mb-3">
+              <legend>Post Details</legend>
+              <div className="mb-3">
+                <label htmlFor="title" className="form-label">
+                  Title
+                </label>
+                <Field
+                  type="text"
+                  name="title"
+                  className="form-control"
+                  placeholder="Enter post title"
+                />
+                <ErrorMessage
+                  name="title"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
 
-            <div className="mb-3">
-              <label htmlFor="description" className="form-label">
-                Description
-              </label>
-              <Field
-                as="textarea"
-                name="description"
-                className="form-control"
-                placeholder="Enter description"
-                rows={3}
-              />
-              <ErrorMessage
-                name="description"
-                component="div"
-                className="text-danger"
-              />
-            </div>
+              <div className="mb-3">
+                <label htmlFor="description" className="form-label">
+                  Description
+                </label>
+                <Field
+                  as="textarea"
+                  name="description"
+                  className="form-control"
+                  placeholder="Enter description"
+                  rows={3}
+                />
+                <ErrorMessage
+                  name="description"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
 
-            <div className="mb-3">
-              <label htmlFor="author" className="form-label">
-                Author
-              </label>
-              <Field
-                type="text"
-                name="author"
-                className="form-control"
-                placeholder="Enter author name"
-              />
-              <ErrorMessage
-                name="author"
-                component="div"
-                className="text-danger"
-              />
-            </div>
-
+              <div className="mb-3">
+                <label htmlFor="author" className="form-label">
+                  Author
+                </label>
+                <Field
+                  type="text"
+                  name="author"
+                  className="form-control"
+                  placeholder="Enter author name"
+                />
+                <ErrorMessage
+                  name="author"
+                  component="div"
+                  className="text-danger"
+                />
+              </div>
+            </fieldset>
             <button
               type="submit"
               className="btn btn-primary"

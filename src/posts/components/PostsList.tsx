@@ -16,17 +16,38 @@ import PostsFilters from "./PostsFilters";
 import { useNavigate } from "react-router-dom";
 
 const PostsList: React.FC = () => {
-  const { filteredTransactions, setPosts } = usePostsStore();
+  const {
+    posts,
+    filteredPosts,
+    statusFilter,
+    searchFilter,
+    setPosts,
+    setfilteredPosts,
+  } = usePostsStore();
 
   //fetch posts on component mount
   const fetchPosts = async () => {
     try {
       const allPosts = await getAllPosts();
       setPosts(allPosts);
+      filterPosts(allPosts, statusFilter, searchFilter);
     } catch (error) {
       toast.error("Failed to fetch posts, please try again");
       console.error("Error fetching posts:", error);
     }
+  };
+
+  const filterPosts = (posts: Post[], status: string, search: string) => {
+    const searchLower = search.toLowerCase();
+    const filtered = posts.filter(
+      (post) =>
+        (status ? post.status === status : true) &&
+        (searchLower
+          ? post.title.toLowerCase().includes(searchLower) ||
+            post.tags.some((tag) => tag.toLowerCase().includes(searchLower))
+          : true)
+    );
+    setfilteredPosts(filtered);
   };
 
   const navigate = useNavigate();
@@ -97,6 +118,10 @@ const PostsList: React.FC = () => {
   );
 
   useEffect(() => {
+    filterPosts(posts, statusFilter, searchFilter);
+  }, [posts, statusFilter, searchFilter]);
+
+  useEffect(() => {
     fetchPosts();
   }, []);
 
@@ -114,7 +139,7 @@ const PostsList: React.FC = () => {
         <PostsFilters />
         <div className="table-responsive">
           <DataTable
-            value={filteredTransactions} // Display filtered posts
+            value={filteredPosts}
             paginator
             rows={5}
             responsiveLayout="stack"

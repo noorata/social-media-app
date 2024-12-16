@@ -1,7 +1,10 @@
+import React from "react";
+import LogoSVG from "../../assets/images/logo.svg?react";
+
 const Logo: React.FC = () => {
   return (
-    <a className="navbar-brand fw-bold text-primary fs-3 px-5" href="#">
-      LOGO
+    <a href="#">
+      <LogoSVG style={{ height: "40px", width: "auto" }} />
     </a>
   );
 };

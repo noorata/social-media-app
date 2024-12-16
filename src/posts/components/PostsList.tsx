@@ -13,6 +13,7 @@ import { Post } from "../posts.types";
 import { getAllPosts, removePost } from "../posts-api";
 import { usePostsStore } from "../posts-store";
 import PostsFilters from "./PostsFilters";
+import { useNavigate } from "react-router-dom";
 
 const PostsList: React.FC = () => {
   const { filteredTransactions, setPosts } = usePostsStore();
@@ -27,6 +28,8 @@ const PostsList: React.FC = () => {
       console.error("Error fetching posts:", error);
     }
   };
+
+  const navigate = useNavigate();
 
   //handle post deletion
   const handleDelete = async (id: number) => {
@@ -102,6 +105,12 @@ const PostsList: React.FC = () => {
       <ToastContainer />
       <div className="container-fluid mt-4">
         <h2 className="mb-4">Posts Management</h2>
+        <button
+          className="btn btn-success mb-3"
+          onClick={() => navigate("/posts/new")}
+        >
+          Create New Post
+        </button>
         <PostsFilters />
         <div className="table-responsive">
           <DataTable

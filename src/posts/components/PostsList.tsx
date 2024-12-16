@@ -14,6 +14,7 @@ import { getAllPosts, removePost } from "../posts-api";
 import { usePostsStore } from "../posts-store";
 import PostsFilters from "./PostsFilters";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const PostsList: React.FC = () => {
   const {
@@ -165,6 +166,18 @@ const PostsList: React.FC = () => {
               body={authorTemplate}
             ></Column>
             <Column body={deleteTemplate} header="Actions"></Column>
+
+            <Column
+              body={(rowData) => (
+                <Link
+                  to={`/posts/${rowData.id}`}
+                  className="btn btn-info btn-sm text-secondary"
+                >
+                  View Details
+                </Link>
+              )}
+              header="Details"
+            />
           </DataTable>
         </div>
       </div>

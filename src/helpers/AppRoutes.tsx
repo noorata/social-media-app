@@ -8,6 +8,7 @@ import Login from "../auth/components/Login";
 import PostsList from "../posts/components/PostsList";
 import { useAuth } from "../auth/context/auth-store";
 import NewPost from "../posts/components/NewPost";
+import PostDetails from "../posts/components/PostDetails";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -39,6 +40,7 @@ const AppRoutes: React.FC = () => {
         <Route path="friends" element={<Friends />} />
         <Route path="posts" element={<Stories />} />
         <Route path="posts-management" element={<PostsList />} />
+        <Route path="posts/:id" element={<PostDetails />} />
         <Route path="events" element={<div>Events Page</div>} />
         <Route path="videos" element={<div>Watch Videos Page</div>} />
         <Route path="files" element={<div>Files Page</div>} />

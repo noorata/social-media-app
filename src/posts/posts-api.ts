@@ -22,8 +22,9 @@
   //post by ID
   export const getPost = async (id: number) => {
     await sleep(2000);
-    const posts = await getAllPosts();
-    return posts.find((post: Post) => post.id === id);
+    const posts = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const parsedPosts: Post[] = posts ? JSON.parse(posts) : [];
+    return parsedPosts.find((post) => post.id === id);
   };
 
   //add new post

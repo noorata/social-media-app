@@ -11,7 +11,7 @@ export const posts: Post[] = [
     comments: 348,
     author: "Alex Guerrero",
     authorImg: "https://randomuser.me/api/portraits/men/1.jpg",
-    img: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
+    img: "https://images.unsplash.com/photo-1734275689167-5f458aacde63?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     tags: ["#React", "#ContextAPI", "#Frontend"],
     content:
     `React Context API is a powerful tool that helps developers manage global state in React applications. In this article, we cover:

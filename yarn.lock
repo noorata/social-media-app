@@ -2841,6 +2841,11 @@ svg-parser@^2.0.4:
   resolved "https://registry.yarnpkg.com/svg-parser/-/svg-parser-2.0.4.tgz#fdc2e29e13951736140b76cb122c8ee6630eb6b5"
   integrity sha512-e4hG1hRwoOdRb37cIMSgzNsxyzKfayW6VOflrwvR+/bzrkyxY/31WkbgnQpgtrNp1SdpJvpUAGTa/ZoiPNDuRQ==
 
+sweetalert2@^11.15.1:
+  version "11.15.1"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.15.1.tgz#2ad9e9d582cf0ea59149efbc082ac72ed3f37d56"
+  integrity sha512-DAE5LEKTarAdperqcLWCoFiwuoh0tdmOYhBK727a0Spj+lDJIQesdeS/Ya2Ek/xD37nFpjQujbp3v4HFmFw+tw==
+
 synckit@^0.9.1:
   version "0.9.2"
   resolved "https://registry.npmjs.org/synckit/-/synckit-0.9.2.tgz"

@@ -12,6 +12,13 @@
     }
   };
 
+  export const getPublishedPosts = async () => {
+    await sleep(500);
+    const storedPosts = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const posts: Post[] = storedPosts ? JSON.parse(storedPosts) : [];
+    return posts.filter((post) => post.status === "published");
+  };
+
   //all posts
   export const getAllPosts = async () => {
     await sleep(2000);

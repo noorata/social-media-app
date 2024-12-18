@@ -4,6 +4,7 @@ import { getPost } from "../posts-api";
 import { Post } from "../posts.types";
 import { toast } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css";
+import clsx from "clsx";
 
 const PostDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,6 +13,11 @@ const PostDetails: React.FC = () => {
   const navigate = useNavigate();
 
   const fetchPostDetails = async () => {
+    if (!id) {
+      toast.error("Invalid Post ID!");
+      navigate("/posts-management");
+      return;
+    }
     try {
       setLoading(true);
       const fetchedPost = await getPost(Number(id));
@@ -75,13 +81,11 @@ const PostDetails: React.FC = () => {
             <p>
               <strong className="text-secondary">Status:</strong>{" "}
               <span
-                className={`badge bg-${
-                  post.status === "published"
-                    ? "success"
-                    : post.status === "draft"
-                      ? "warning"
-                      : "danger"
-                }`}
+                className={clsx("badge", {
+                  "bg-success": post.status === "published",
+                  "bg-warning text-dark": post.status === "draft",
+                  "bg-danger": post.status === "deleted",
+                })}
               >
                 {post.status.toUpperCase()}
               </span>

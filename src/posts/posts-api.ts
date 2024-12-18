@@ -1,4 +1,4 @@
-  import { Post } from "./posts.types";
+  import { Post, PostStatusesEnum  } from "./posts.types";
   import { sleep } from "../utils";
 
   const LOCAL_STORAGE_KEY  = "posts";
@@ -16,7 +16,7 @@
     await sleep(500);
     const storedPosts = localStorage.getItem(LOCAL_STORAGE_KEY);
     const posts: Post[] = storedPosts ? JSON.parse(storedPosts) : [];
-    return posts.filter((post) => post.status === "published");
+    return posts.filter((post) => post.status === PostStatusesEnum.PUBLISHED);
   };
 
   //all posts

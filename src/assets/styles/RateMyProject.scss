@@ -1,0 +1,87 @@
+$primary-color: #007bff;
+$secondary-color: #e3f2fd;
+$success-color: #28a745;
+$text-color: #333;
+
+.rate-my-project {
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #f8f9fa, #e0f7fa);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  .container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+
+    .heading {
+      font-size: 2.5rem;
+      color: $primary-color;
+      margin-bottom: 20px;
+    }
+
+    .reactions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+
+      .reaction-button {
+        font-size: 2rem;
+        padding: 10px 15px;
+        border: 2px solid $primary-color;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: transform 0.2s, background-color 0.2s;
+
+        &:hover {
+          transform: scale(1.2);
+          background-color: $secondary-color;
+        }
+
+        &.active {
+          background-color: lighten($primary-color, 30%);
+          border-color: darken($primary-color, 10%);
+        }
+      }
+    }
+
+    .feedback-textarea {
+      width: 100%;
+      border: 1px solid #ced4da;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .submit-button {
+      background: $primary-color;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+
+    .thank-you-section {
+      text-align: center;
+      .text-success {
+        color: $success-color;
+        font-size: 1.5rem;
+        margin-top: 20px;
+      }
+    }
+  }
+}

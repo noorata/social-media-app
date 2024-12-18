@@ -14,6 +14,8 @@ import { getAllPosts, removePost } from "../posts-api";
 import { usePostsStore } from "../posts-store";
 import PostsFilters from "./PostsFilters";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const PostsList: React.FC = () => {
   const {
@@ -54,13 +56,33 @@ const PostsList: React.FC = () => {
 
   //handle post deletion
   const handleDelete = async (id: number) => {
-    try {
-      await removePost(id);
-      toast.success("Post deleted successfully!");
-      fetchPosts();
-    } catch (error) {
-      toast.error("Failed to delete the post. Please try again.");
-      console.error("Error deleting post:", error);
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This post will be marked as deleted.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#dc3545",
+      cancelButtonColor: "#6c757d",
+    });
+    if (result.isConfirmed) {
+      try {
+        await removePost(id);
+        Swal.fire(
+          "Deleted!",
+          "The post has been deleted successfully.",
+          "success"
+        );
+        fetchPosts();
+      } catch (error) {
+        Swal.fire(
+          "Error",
+          "Failed to delete the post. Please try again.",
+          "error"
+        );
+        console.error("Error deleting post:", error);
+      }
     }
   };
 
@@ -165,6 +187,18 @@ const PostsList: React.FC = () => {
               body={authorTemplate}
             ></Column>
             <Column body={deleteTemplate} header="Actions"></Column>
+
+            <Column
+              body={(rowData) => (
+                <Link
+                  to={`/posts/${rowData.id}`}
+                  className="btn btn-info btn-sm text-secondary"
+                >
+                  View Details
+                </Link>
+              )}
+              header="Details"
+            />
           </DataTable>
         </div>
       </div>

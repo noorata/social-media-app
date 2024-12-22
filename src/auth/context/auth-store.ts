@@ -3,7 +3,8 @@ import { login as loginService, logout as logoutService, getStoredUsername } fro
 
 export interface AuthContextType {
   username: string;
-  login: (username: string) => void;
+  role: "admin" | "user";
+  login: (username: string, role: "admin" | "user") => void;
   logout: () => void;
 }
 
@@ -20,16 +21,20 @@ export const useAuth = (): AuthContextType => {
 };
 
 export const useAuthLogic = () => {
-  const [username, setUsername] = useState(() => getStoredUsername());
+  const storedUserName = getStoredUsername ();
+  const [username, setUsername] = useState(storedUserName.username);
+  const [role, setRole] = useState(storedUserName.role);
 
-  const login = (username: string) => {
-    loginService(username);
+  const login = (username: string, role: "admin" | "user") => {
+    loginService(username, role);
     setUsername(username);
+    setRole(role);
   };
 
   const logout = () => {
     logoutService();
     setUsername("");
+    setRole("user");    
   };
 
   useEffect(() => {
@@ -39,5 +44,5 @@ export const useAuthLogic = () => {
     }
   }, []);
 
-  return { username, login, logout };
+  return { username, role, login, logout };
 };

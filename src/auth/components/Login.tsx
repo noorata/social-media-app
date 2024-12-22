@@ -5,6 +5,7 @@ import "../Login.scss";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
+  const [role, setRole] = useState<"admin" | "user">("user");
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ const Login: React.FC = () => {
       alert("Please enter a username.");
       return;
     }
-    login(username);
+    login(username, role);
     navigate("/");
   };
 
@@ -39,6 +40,33 @@ const Login: React.FC = () => {
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
+
+          <div className="mb-3">
+            <label className="form-label">Role</label>
+            <div>
+              <label className="me-3">
+                <input
+                  type="radio"
+                  name="role"
+                  value="admin"
+                  checked={role === "admin"}
+                  onChange={() => setRole("admin")}
+                />
+                Admin
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="role"
+                  value="user"
+                  checked={role === "user"}
+                  onChange={() => setRole("user")}
+                />
+                User
+              </label>
+            </div>
+          </div>
+
           <button type="submit" className="btn btn-primary w-100">
             Login
           </button>

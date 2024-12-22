@@ -5,7 +5,7 @@ import Toolbar from "./Toolbar";
 
 const Header: React.FC = () => {
   return (
-    <nav className="navbar bg-white shadow-sm py-2">
+    <nav className="navbar bg-white shadow-sm py-2 fixed-top">
       <div className="container-fluid d-flex align-items-center justify-content-between">
         {/*logo section*/}
         <div className="d-flex align-items-center">

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import dayjs from "dayjs";
@@ -13,11 +13,13 @@ import { Post } from "../posts.types";
 import { getAllPosts, removePost } from "../posts-api";
 import { usePostsStore } from "../posts-store";
 import PostsFilters from "./PostsFilters";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import Authorize from "../../auth/components/Authorize";
+import NewPost from "./NewPost";
 
 const PostsList: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     posts,
     filteredPosts,
@@ -51,8 +53,6 @@ const PostsList: React.FC = () => {
     );
     setfilteredPosts(filtered);
   };
-
-  const navigate = useNavigate();
 
   //handle post deletion
   const handleDelete = async (id: number) => {
@@ -131,12 +131,14 @@ const PostsList: React.FC = () => {
 
   //render delete button
   const deleteTemplate = (rowData: Post) => (
-    <button
-      className="btn btn-danger btn-sm"
-      onClick={() => handleDelete(rowData.id)}
-    >
-      Delete
-    </button>
+    <Authorize allowedRoles={["admin"]}>
+      <button
+        className="btn btn-danger btn-sm"
+        onClick={() => handleDelete(rowData.id)}
+      >
+        Delete
+      </button>
+    </Authorize>
   );
 
   useEffect(() => {
@@ -154,16 +156,40 @@ const PostsList: React.FC = () => {
         <h2 className="mb-4">Posts Management</h2>
         <button
           className="btn btn-success mb-3"
-          onClick={() => navigate("/posts/new")}
+          onClick={() => setIsModalOpen(true)}
         >
           Create New Post
         </button>
+        {isModalOpen && (
+          <div
+            className="modal fade show d-block"
+            tabIndex={-1}
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          >
+            <div className="modal-dialog modal-lg">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Create New Post</h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={() => setIsModalOpen(false)}
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  <NewPost />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <PostsFilters />
         <div className="table-responsive">
           <DataTable
             value={filteredPosts}
             paginator
-            rows={5}
+            rows={3}
+            rowsPerPageOptions={[3, 5, 10]}
             responsiveLayout="stack"
             className="shadow"
           >

@@ -78,3 +78,20 @@ export const posts: Post[] = [
     `,
   },
 ];
+for (let i = 5; i <= 200; i++) {
+  posts.push({
+    id: i,
+    title: `Post ${i}`,
+    description: `This is the description for post ${i}.`,
+    dateCreated: new Date().toISOString(),
+    status: "published",
+    likes: Math.floor(Math.random() * 1000),
+    comments: Math.floor(Math.random() * 500),
+    author: `Author ${i}`,
+    authorImg: "https://randomuser.me/api/portraits/men/1.jpg",
+    img: "https://via.placeholder.com/600",
+    tags: [`#Tag${i}`, `#React`],
+    content: `This is the content for post ${i}.`,
+  });
+}
+

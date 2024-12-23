@@ -19,6 +19,25 @@
     return posts.filter((post) => post.status === PostStatusesEnum.PUBLISHED);
   };
 
+  export const getPublishedPostsPaginated = async (page: number, limit: number) => {
+    await sleep(500);
+  
+    const storedPosts = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const allPosts: Post[] = storedPosts ? JSON.parse(storedPosts) : [];
+  
+    const publishedPosts = allPosts.filter(
+      (post) => post.status === PostStatusesEnum.PUBLISHED
+    );
+  
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+  
+    const pagePosts = publishedPosts.slice(startIndex, endIndex);
+    const hasMore = endIndex < publishedPosts.length;
+  
+    return { data: pagePosts, hasMore };
+  };
+
   //all posts
   export const getAllPosts = async () => {
     await sleep(2000);

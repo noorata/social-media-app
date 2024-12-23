@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import PostCard from "./Post";
 import { Post } from "../posts.types";
-import { getPublishedPosts } from "../posts-api";
+import { getPublishedPostsPaginated } from "../posts-api";
 import "../../assets/styles/responsive.scss";
 
 const RecentPosts: React.FC = () => {
-  const [publishedPosts, setPublishedPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [page, setPage] = useState<number>(1);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [hasMore, setHasMore] = useState<boolean>(true);
 
   //fetch the published posts from localStorage
   const fetchPublishedPosts = async () => {
     try {
-      setLoading(true);
-      const posts = await getPublishedPosts();
-      setPublishedPosts(posts);
+      const response = await getPublishedPostsPaginated(page, 4);
+      setPosts((prevPosts) => [...prevPosts, ...response.data]);
+      setHasMore(response.hasMore);
+      setPage((prevPage) => prevPage + 1);
     } catch (error) {
       console.error("Failed to load posts:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -27,19 +28,27 @@ const RecentPosts: React.FC = () => {
 
   return (
     <div className="row g-3">
-      {loading ? (
-        <div className="text-center text-muted">Loading posts...</div>
-      ) : publishedPosts.length > 0 ? (
-        publishedPosts.map((post: Post) => (
-          <div className="col-12 col-md-6 col-lg-4" key={post.id}>
-            <PostCard post={post} />
+      <InfiniteScroll
+        dataLength={posts.length}
+        next={fetchPublishedPosts}
+        hasMore={hasMore}
+        loader={<div className="text-center text-muted">Loading posts...</div>}
+        endMessage={
+          <p className="text-center text-muted">No more posts to show.</p>
+        }
+      >
+        {posts.length === 0 ? (
+          <div className="text-center text-muted">
+            No published posts available.
           </div>
-        ))
-      ) : (
-        <div className="text-center text-muted">
-          No published posts available.
-        </div>
-      )}
+        ) : (
+          posts.map((post: Post) => (
+            <div className="col-12" key={post.id}>
+              <PostCard post={post} />
+            </div>
+          ))
+        )}
+      </InfiniteScroll>
     </div>
   );
 };

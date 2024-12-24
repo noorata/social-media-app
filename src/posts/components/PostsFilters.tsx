@@ -17,7 +17,7 @@ const PostsFilters: React.FC = () => {
     { label: "Deleted", value: "deleted" },
   ];
   return (
-    <div className="mb-3 d-flex gap-3">
+    <div className="mb-3 d-flex gap-3 align-items-center">
       {/*filter by status*/}
       <Dropdown
         value={statusFilter}
@@ -25,6 +25,8 @@ const PostsFilters: React.FC = () => {
         onChange={(e) => setStatusFilter(e.value)}
         placeholder="Filter by status"
         className="w-25"
+        optionValue="value"
+        optionLabel="label"
       />
 
       {/*search field*/}

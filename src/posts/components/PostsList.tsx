@@ -102,11 +102,15 @@ const PostsList: React.FC = () => {
   //render tags
   const tagsTemplate = (rowData: Post) => (
     <div className="d-flex flex-wrap">
-      {rowData.tags?.map((tag, index) => (
-        <span key={index} className="badge bg-primary me-1 mb-1">
-          {tag}
-        </span>
-      )) || <span>No Tags</span>}
+      {rowData.tags?.length ? (
+        rowData.tags.map((tag, index) => (
+          <span key={index} className="badge bg-primary me-1 mb-1">
+            {tag}
+          </span>
+        ))
+      ) : (
+        <span>No Tags</span>
+      )}
     </div>
   );
 
@@ -140,6 +144,11 @@ const PostsList: React.FC = () => {
       </button>
     </Authorize>
   );
+
+  const handlePostCreated = () => {
+    fetchPosts();
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     filterPosts(posts, statusFilter, searchFilter);
@@ -177,7 +186,10 @@ const PostsList: React.FC = () => {
                   ></button>
                 </div>
                 <div className="modal-body">
-                  <NewPost />
+                  <NewPost
+                    onPostCreated={handlePostCreated}
+                    onClose={() => setIsModalOpen(false)}
+                  />
                 </div>
               </div>
             </div>

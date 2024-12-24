@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import dayjs from "dayjs";
@@ -13,9 +13,13 @@ import { Post } from "../posts.types";
 import { getAllPosts, removePost } from "../posts-api";
 import { usePostsStore } from "../posts-store";
 import PostsFilters from "./PostsFilters";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+import Authorize from "../../auth/components/Authorize";
+import NewPost from "./NewPost";
 
 const PostsList: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     posts,
     filteredPosts,
@@ -50,17 +54,35 @@ const PostsList: React.FC = () => {
     setfilteredPosts(filtered);
   };
 
-  const navigate = useNavigate();
-
   //handle post deletion
   const handleDelete = async (id: number) => {
-    try {
-      await removePost(id);
-      toast.success("Post deleted successfully!");
-      fetchPosts();
-    } catch (error) {
-      toast.error("Failed to delete the post. Please try again.");
-      console.error("Error deleting post:", error);
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This post will be marked as deleted.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#dc3545",
+      cancelButtonColor: "#6c757d",
+    });
+    if (result.isConfirmed) {
+      try {
+        await removePost(id);
+        Swal.fire(
+          "Deleted!",
+          "The post has been deleted successfully.",
+          "success"
+        );
+        fetchPosts();
+      } catch (error) {
+        Swal.fire(
+          "Error",
+          "Failed to delete the post. Please try again.",
+          "error"
+        );
+        console.error("Error deleting post:", error);
+      }
     }
   };
 
@@ -80,11 +102,15 @@ const PostsList: React.FC = () => {
   //render tags
   const tagsTemplate = (rowData: Post) => (
     <div className="d-flex flex-wrap">
-      {rowData.tags?.map((tag, index) => (
-        <span key={index} className="badge bg-primary me-1 mb-1">
-          {tag}
-        </span>
-      )) || <span>No Tags</span>}
+      {rowData.tags?.length ? (
+        rowData.tags.map((tag, index) => (
+          <span key={index} className="badge bg-primary me-1 mb-1">
+            {tag}
+          </span>
+        ))
+      ) : (
+        <span>No Tags</span>
+      )}
     </div>
   );
 
@@ -109,13 +135,20 @@ const PostsList: React.FC = () => {
 
   //render delete button
   const deleteTemplate = (rowData: Post) => (
-    <button
-      className="btn btn-danger btn-sm"
-      onClick={() => handleDelete(rowData.id)}
-    >
-      Delete
-    </button>
+    <Authorize allowedRoles={["admin"]}>
+      <button
+        className="btn btn-danger btn-sm"
+        onClick={() => handleDelete(rowData.id)}
+      >
+        Delete
+      </button>
+    </Authorize>
   );
+
+  const handlePostCreated = () => {
+    fetchPosts();
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     filterPosts(posts, statusFilter, searchFilter);
@@ -132,16 +165,43 @@ const PostsList: React.FC = () => {
         <h2 className="mb-4">Posts Management</h2>
         <button
           className="btn btn-success mb-3"
-          onClick={() => navigate("/posts/new")}
+          onClick={() => setIsModalOpen(true)}
         >
           Create New Post
         </button>
+        {isModalOpen && (
+          <div
+            className="modal fade show d-block"
+            tabIndex={-1}
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          >
+            <div className="modal-dialog modal-lg">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Create New Post</h5>
+                  <button
+                    type="button"
+                    className="btn-close"
+                    onClick={() => setIsModalOpen(false)}
+                  ></button>
+                </div>
+                <div className="modal-body">
+                  <NewPost
+                    onPostCreated={handlePostCreated}
+                    onClose={() => setIsModalOpen(false)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <PostsFilters />
         <div className="table-responsive">
           <DataTable
             value={filteredPosts}
             paginator
-            rows={5}
+            rows={3}
+            rowsPerPageOptions={[3, 5, 10]}
             responsiveLayout="stack"
             className="shadow"
           >
@@ -165,6 +225,18 @@ const PostsList: React.FC = () => {
               body={authorTemplate}
             ></Column>
             <Column body={deleteTemplate} header="Actions"></Column>
+
+            <Column
+              body={(rowData) => (
+                <Link
+                  to={`/posts/${rowData.id}`}
+                  className="btn btn-info btn-sm text-secondary"
+                >
+                  View Details
+                </Link>
+              )}
+              header="Details"
+            />
           </DataTable>
         </div>
       </div>

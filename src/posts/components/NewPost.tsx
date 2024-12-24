@@ -1,10 +1,9 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
-import { addPost } from "../posts-api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { addPost } from "../posts-api";
 
 const validationSchema = Yup.object({
   title: Yup.string()
@@ -16,9 +15,12 @@ const validationSchema = Yup.object({
   author: Yup.string().required("Author is required"),
 });
 
-const NewPost: React.FC = () => {
-  const navigate = useNavigate();
+interface NewPostProps {
+  onPostCreated: () => void;
+  onClose: () => void;
+}
 
+const NewPost: React.FC<NewPostProps> = ({ onPostCreated, onClose }) => {
   const handleSubmit = async (values: {
     title: string;
     description: string;
@@ -40,7 +42,8 @@ const NewPost: React.FC = () => {
 
       await addPost(newPost);
       toast.success("Post created successfully!");
-      navigate("/posts-management");
+      onPostCreated();
+      onClose();
     } catch (error) {
       console.error("Error creating post:", error);
       toast.error("Failed to create post. Please try again.");
@@ -48,7 +51,7 @@ const NewPost: React.FC = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-3">
       <h2 className="mb-4">Create New Post</h2>
 
       <Formik

@@ -13,3 +13,9 @@ export interface Post {
     content: string;
   }
   
+  export enum PostStatusesEnum {
+    DRAFT = "draft",
+    PUBLISHED = "published",
+    DELETED = "deleted",
+  }
+  

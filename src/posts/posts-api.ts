@@ -1,4 +1,4 @@
-  import { Post } from "./posts.types";
+  import { Post, PostStatusesEnum  } from "./posts.types";
   import { sleep } from "../utils";
 
   const LOCAL_STORAGE_KEY  = "posts";
@@ -12,6 +12,32 @@
     }
   };
 
+  export const getPublishedPosts = async () => {
+    await sleep(500);
+    const storedPosts = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const posts: Post[] = storedPosts ? JSON.parse(storedPosts) : [];
+    return posts.filter((post) => post.status === PostStatusesEnum.PUBLISHED);
+  };
+
+  export const getPublishedPostsPaginated = async (page: number, limit: number) => {
+    await sleep(500);
+  
+    const storedPosts = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const allPosts: Post[] = storedPosts ? JSON.parse(storedPosts) : [];
+  
+    const publishedPosts = allPosts.filter(
+      (post) => post.status === PostStatusesEnum.PUBLISHED
+    );
+  
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+  
+    const pagePosts = publishedPosts.slice(startIndex, endIndex);
+    const hasMore = endIndex < publishedPosts.length;
+  
+    return { data: pagePosts, hasMore };
+  };
+
   //all posts
   export const getAllPosts = async () => {
     await sleep(2000);
@@ -22,8 +48,9 @@
   //post by ID
   export const getPost = async (id: number) => {
     await sleep(2000);
-    const posts = await getAllPosts();
-    return posts.find((post: Post) => post.id === id);
+    const posts = localStorage.getItem(LOCAL_STORAGE_KEY);
+    const parsedPosts: Post[] = posts ? JSON.parse(posts) : [];
+    return parsedPosts.find((post) => post.id === id);
   };
 
   //add new post

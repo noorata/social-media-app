@@ -1,0 +1,136 @@
+{
+    "toolbar": {
+      "language": "Language"
+    },
+    "welcome": "Welcome",
+    "logout": "Logout",
+    "greeting": "Hello",
+    "aside": {
+      "feed": "Feed",
+      "friends": "Friends",
+      "events": "Events",
+      "videos": "Watch Videos",
+      "files": "Files",
+      "postsManagement": "Posts Management",
+      "pagesYouLike": "Pages You Like"
+    },
+    "footer": {
+      "copy": "© 2024 Social Media App",
+      "rateProject": "🎉 Rate My Project!"
+    },
+    "homepage": {
+    "stories": "Stories",
+    "recentPosts": "Recent Posts",
+    "feeds": "Feeds",
+    "all": "All",
+    "following": "Following",
+    "latest": "Latest",
+    "popular": "Popular"
+    },
+    "posts": {
+    "noTags": "No tags"
+    }, 
+    "postDetails": {
+        "invalidId": "Invalid Post ID!",
+        "notFound": "Post not found!",
+        "failedLoad": "Failed to load post details.",
+        "loading": "Loading post details...",
+        "noPost": "No post found.",
+        "description": "Description",
+        "noDescription": "No description provided.",
+        "author": "Author",
+        "dateCreated": "Date Created",
+        "status": "Status",
+        "tags": "Tags",
+        "noTags": "No tags available",
+        "backToPosts": "Back to Posts"
+    },
+    "postsFilters": {
+        "all": "All",
+        "draft": "Draft",
+        "published": "Published",
+        "deleted": "Deleted",
+        "placeholder": {
+        "status": "Filter by status",
+        "search": "Search by title or tags"
+        }
+    },
+    "postsList": {
+        "title": "Posts Management",
+        "btn": {
+        "createNew": "Create New Post",
+        "delete": "Delete",
+        "viewDetails": "View Details"
+        },
+        "createModal": "Create New Post",
+        "header": {
+        "title": "Title",
+        "description": "Description",
+        "createdAt": "Created At",
+        "status": "Status",
+        "tags": "Tags",
+        "author": "Author",
+        "actions": "Actions",
+        "details": "Details"
+        },
+        "noTags": "No Tags",
+        "msg": {
+        "fetchError": "Failed to fetch posts, please try again"
+        },
+        "deleteConfirm": {
+        "title": "Are you sure?",
+        "text": "This post will be marked as deleted.",
+        "confirmBtn": "Yes, delete it!",
+        "cancelBtn": "Cancel"
+        },
+        "deleteResult": {
+        "title": "Deleted!",
+        "text": "The post has been deleted successfully."
+        },
+        "deleteError": {
+        "title": "Error",
+        "text": "Failed to delete the post. Please try again."
+        }
+    },
+    "recentPosts": {
+        "loadingPosts": "Loading posts...",
+        "noMore": "No more posts to show.",
+        "noPosts": "No published posts available."
+    },
+    "newPost": {
+      "createNewPost": "Create New Post",
+      "postDetails": "Post Details",
+      "title": "Title",
+      "description": "Description",
+      "author": "Author",
+      "placeholder": {
+        "title": "Enter post title",
+        "description": "Enter description",
+        "author": "Enter author name"
+      },
+      "btn": {
+        "save": "Save Post",
+        "saving": "Saving..."
+      },
+      "msg": {
+        "postCreated": "Post created successfully!",
+        "failedCreatePost": "Failed to create post. Please try again."
+      },
+      "validation": {
+        "titleRequired": "Title is required",
+        "titleMin": "Title must be at least 5 characters",
+        "descRequired": "Description is required",
+        "descMin": "Description must be at least 5 characters",
+        "authorRequired": "Author is required"
+      }
+    
+    },
+    "friends": {
+        "searchPlaceholder": "Search...",
+        "friendsTitle": "Friends",
+        "groupsTitle": "Groups",
+        "online": "Online",
+        "lastActive": "Last active: {{time}}"
+      }
+  }
+  

@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../../assets/styles/aside.scss";
+import { useTranslation } from "react-i18next";
 
 const Aside: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <div
       className="sidebar bg-white text-black shadow-sm d-flex flex-column p-3"
@@ -16,7 +18,7 @@ const Aside: React.FC = () => {
             className="d-flex align-items-center text-black text-decoration-none fw-semibold w-100 rounded hover-effect"
           >
             <i className="fas fa-home me-3 text-muted"></i>
-            Feed
+            {t("aside.feed")}
           </Link>
         </li>
         <li className="py-3 px-3 d-flex align-items-center rounded">
@@ -25,7 +27,7 @@ const Aside: React.FC = () => {
             className="d-flex align-items-center text-black text-decoration-none fw-semibold w-100 rounded hover-effect"
           >
             <i className="fas fa-user-friends me-3 text-muted"></i>
-            Friends
+            {t("aside.friends")}
           </Link>
         </li>
         <li className="py-3 px-3 d-flex align-items-center rounded">
@@ -34,7 +36,7 @@ const Aside: React.FC = () => {
             className="d-flex align-items-center text-black text-decoration-none fw-semibold w-100 rounded hover-effect"
           >
             <i className="fas fa-calendar-alt me-3 text-muted"></i>
-            Event
+            {t("aside.events")}
           </Link>
         </li>
         <li className="py-3 px-3 d-flex align-items-center rounded">
@@ -43,7 +45,7 @@ const Aside: React.FC = () => {
             className="d-flex align-items-center text-black text-decoration-none fw-semibold w-100 rounded hover-effect"
           >
             <i className="fas fa-photo-video me-3 text-muted"></i>
-            Watch Videos
+            {t("aside.videos")}
           </Link>
         </li>
         <li className="py-3 px-3 d-flex align-items-center rounded">
@@ -52,7 +54,7 @@ const Aside: React.FC = () => {
             className="d-flex align-items-center text-black text-decoration-none fw-semibold w-100 rounded hover-effect"
           >
             <i className="fas fa-file me-3 text-muted"></i>
-            Files
+            {t("aside.files")}
           </Link>
         </li>
         <li className="py-3 px-3 d-flex align-items-center rounded">
@@ -61,14 +63,16 @@ const Aside: React.FC = () => {
             className="d-flex align-items-center text-black text-decoration-none fw-semibold w-100 rounded hover-effect"
           >
             <i className="fas fa-file me-3 text-muted"></i>
-            Posts Management
+            {t("aside.postsManagement")}
           </Link>
         </li>
       </ul>
 
       {/*pages you like section*/}
       <div className="py-4">
-        <h6 className="text-uppercase text-muted px-3 mb-3">Pages You Like</h6>
+        <h6 className="text-uppercase text-muted px-3 mb-3">
+          {t("aside.pagesYouLike")}
+        </h6>
         <ul className="list-unstyled">
           <li className="py-2 px-2 d-flex align-items-center hover-effect">
             <img

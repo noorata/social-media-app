@@ -4,16 +4,7 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addPost } from "../posts-api";
-
-const validationSchema = Yup.object({
-  title: Yup.string()
-    .required("Title is required")
-    .min(5, "Title must be at least 5 characters"),
-  description: Yup.string()
-    .required("Description is required")
-    .min(5, "Description must be at least 5 characters"),
-  author: Yup.string().required("Author is required"),
-});
+import { useTranslation } from "react-i18next";
 
 interface NewPostProps {
   onPostCreated: () => void;
@@ -21,6 +12,18 @@ interface NewPostProps {
 }
 
 const NewPost: React.FC<NewPostProps> = ({ onPostCreated, onClose }) => {
+  const { t } = useTranslation();
+
+  const validationSchema = Yup.object({
+    title: Yup.string()
+      .required(t("newPost.validation.titleRequired"))
+      .min(5, t("newPost.validation.titleMin")),
+    description: Yup.string()
+      .required(t("newPost.validation.descRequired"))
+      .min(5, t("newPost.validation.descMin")),
+    author: Yup.string().required(t("newPost.validation.authorRequired")),
+  });
+
   const handleSubmit = async (values: {
     title: string;
     description: string;
@@ -41,18 +44,18 @@ const NewPost: React.FC<NewPostProps> = ({ onPostCreated, onClose }) => {
       };
 
       await addPost(newPost);
-      toast.success("Post created successfully!");
+      toast.success(t("newPost.msg.postCreated"));
       onPostCreated();
       onClose();
     } catch (error) {
       console.error("Error creating post:", error);
-      toast.error("Failed to create post. Please try again.");
+      toast.error(t("newPost.msg.failedCreatePost"));
     }
   };
 
   return (
     <div className="container mt-3">
-      <h2 className="mb-4">Create New Post</h2>
+      <h2 className="mb-4">{t("newPost.createNewPost")}</h2>
 
       <Formik
         initialValues={{ title: "", description: "", author: "" }}
@@ -62,16 +65,16 @@ const NewPost: React.FC<NewPostProps> = ({ onPostCreated, onClose }) => {
         {({ isSubmitting }) => (
           <Form className="shadow p-4 bg-light rounded">
             <fieldset className="mb-3">
-              <legend>Post Details</legend>
+              <legend>{t("newPost.postDetails")}</legend>
               <div className="mb-3">
                 <label htmlFor="title" className="form-label">
-                  Title
+                  {t("newPost.title")}
                 </label>
                 <Field
                   type="text"
                   name="title"
                   className="form-control"
-                  placeholder="Enter post title"
+                  placeholder={t("newPost.placeholder.title")}
                 />
                 <ErrorMessage
                   name="title"
@@ -82,13 +85,13 @@ const NewPost: React.FC<NewPostProps> = ({ onPostCreated, onClose }) => {
 
               <div className="mb-3">
                 <label htmlFor="description" className="form-label">
-                  Description
+                  {t("newPost.description")}
                 </label>
                 <Field
                   as="textarea"
                   name="description"
                   className="form-control"
-                  placeholder="Enter description"
+                  placeholder={t("newPost.placeholder.description")}
                   rows={3}
                 />
                 <ErrorMessage
@@ -100,13 +103,13 @@ const NewPost: React.FC<NewPostProps> = ({ onPostCreated, onClose }) => {
 
               <div className="mb-3">
                 <label htmlFor="author" className="form-label">
-                  Author
+                  {t("newPost.author")}
                 </label>
                 <Field
                   type="text"
                   name="author"
                   className="form-control"
-                  placeholder="Enter author name"
+                  placeholder={t("newPost.placeholder.author")}
                 />
                 <ErrorMessage
                   name="author"
@@ -120,7 +123,7 @@ const NewPost: React.FC<NewPostProps> = ({ onPostCreated, onClose }) => {
               className="btn btn-primary"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Saving..." : "Save Post"}
+              {isSubmitting ? t("newPost.btn.saving") : t("newPost.btn.save")}
             </button>
           </Form>
         )}

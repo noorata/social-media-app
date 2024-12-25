@@ -1,11 +1,13 @@
 import "../../assets/styles/responsive.scss";
 import { Post } from "../posts.types";
+import { useTranslation } from "react-i18next";
 
 interface PostCardProps {
   post: Post;
 }
 
 const PostCard = ({ post }: PostCardProps) => {
+  const { t } = useTranslation();
   const { author, authorImg, img, likes, comments, tags, content } = post;
 
   return (
@@ -40,11 +42,15 @@ const PostCard = ({ post }: PostCardProps) => {
 
         {/*tags*/}
         <div className="mb-2 d-flex flex-wrap">
-          {tags.map((tag, index) => (
-            <span key={index} className="text-primary me-2 fw-semibold">
-              {tag}
-            </span>
-          ))}
+          {tags.length > 0 ? (
+            tags.map((tag, index) => (
+              <span key={index} className="text-primary me-2 fw-semibold">
+                {tag}
+              </span>
+            ))
+          ) : (
+            <span className="text-muted">{t("posts.noTags")}</span>
+          )}
         </div>
 
         {/*content*/}

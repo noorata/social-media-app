@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../../assets/styles/aside.scss";
 import { useTranslation } from "react-i18next";
+import Authorize from "../../auth/components/Authorize";
 
 const Aside: React.FC = () => {
   const { t } = useTranslation();
@@ -65,6 +66,17 @@ const Aside: React.FC = () => {
             <i className="fas fa-file me-3 text-muted"></i>
             {t("aside.postsManagement")}
           </Link>
+        </li>
+        <li className="py-3 px-3 d-flex align-items-center rounded">
+          <Authorize allowedRoles={["admin"]}>
+            <Link
+              to="/insights"
+              className="d-flex align-items-center text-black text-decoration-none fw-semibold w-100 rounded hover-effect"
+            >
+              <i className="fas fa-chart-pie me-3 text-muted"></i>
+              {t("aside.insights")}
+            </Link>
+          </Authorize>
         </li>
       </ul>
 

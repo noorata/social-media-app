@@ -10,6 +10,7 @@ import { useAuth } from "../auth/context/auth-store";
 import NewPost from "../posts/components/NewPost";
 import PostDetails from "../posts/components/PostDetails";
 import RateMyProject from "../RateMyProject";
+import Insights from "../insights/Insights";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -45,8 +46,21 @@ const AppRoutes: React.FC = () => {
         <Route path="events" element={<div>Events Page</div>} />
         <Route path="videos" element={<div>Watch Videos Page</div>} />
         <Route path="files" element={<div>Files Page</div>} />
-        <Route path="posts/new" element={<NewPost />} />
+        <Route
+          path="posts/new"
+          element={
+            <NewPost
+              onPostCreated={() => {
+                console.log("Post created successfully!");
+              }}
+              onClose={() => {
+                console.log("Closed NewPost form!");
+              }}
+            />
+          }
+        />
         <Route path="/rate-my-project" element={<RateMyProject />} />
+        <Route path="/insights" element={<Insights />} />
       </Route>
     </Routes>
   );

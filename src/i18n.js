@@ -24,4 +24,14 @@ i18n
     },
   });
 
+i18n.on('languageChanged', (lng) => {
+  if (lng === 'ar') {
+    document.documentElement.dir = 'rtl';
+    document.documentElement.lang = 'ar';
+  } else {
+    document.documentElement.dir = 'ltr';
+    document.documentElement.lang = 'en';
+  }
+});
+
 export default i18n;

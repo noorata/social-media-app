@@ -12,6 +12,7 @@
       "videos": "Watch Videos",
       "files": "Files",
       "postsManagement": "Posts Management",
+      "insights": "Insights",
       "pagesYouLike": "Pages You Like"
     },
     "footer": {
@@ -126,11 +127,16 @@
     
     },
     "friends": {
-        "searchPlaceholder": "Search...",
-        "friendsTitle": "Friends",
-        "groupsTitle": "Groups",
-        "online": "Online",
-        "lastActive": "Last active: {{time}}"
-      }
+      "searchPlaceholder": "Search...",
+      "friendsTitle": "Friends",
+      "groupsTitle": "Groups",
+      "online": "Online",
+      "lastActive": "Last active: {{time}}"
+    },
+    "insights": {
+    "pageTitle": "Insights",
+    "likesByDay": "Likes by Day (Current Month)",
+    "postStatusDistribution": "Post Status Distribution"
+  }
   }
   

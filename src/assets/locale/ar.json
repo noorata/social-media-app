@@ -12,6 +12,7 @@
       "videos": "مشاهدة الفيديوهات",
       "files": "الملفات",
       "postsManagement": "إدارة المنشورات",
+      "insights": "التحليلات",
       "pagesYouLike": "الصفحات المفضلة"
     },
     "footer": {
@@ -125,11 +126,17 @@
       }
     },
     "friends": {
-        "searchPlaceholder": "ابحث...",
-        "friendsTitle": "الأصدقاء",
-        "groupsTitle": "المجموعات",
-        "online": "متصل",
-        "lastActive": "آخر نشاط: {{time}}"
-      }
+      "searchPlaceholder": "ابحث...",
+      "friendsTitle": "الأصدقاء",
+      "groupsTitle": "المجموعات",
+      "online": "متصل",
+      "lastActive": "آخر نشاط: {{time}}"
+    },
+    "insights": {
+      "pageTitle": "التحليلات",
+      "likesByDay": "الإعجابات حسب اليوم (الشهر الحالي)",
+      "postStatusDistribution": "توزيع حالات المنشورات"
+    }
+
   }
   

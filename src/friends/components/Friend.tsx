@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface FriendProps {
   name: string;
@@ -8,6 +9,7 @@ interface FriendProps {
 }
 
 const Friend: React.FC<FriendProps> = ({ name, time, isOnline, img }) => {
+  const { t } = useTranslation();
   return (
     <div className="d-flex align-items-center justify-content-between mb-3">
       {/*friend details*/}
@@ -27,15 +29,20 @@ const Friend: React.FC<FriendProps> = ({ name, time, isOnline, img }) => {
 
       {/*status*/}
       {isOnline ? (
-        <div
-          className="bg-success rounded-circle"
-          style={{
-            width: "10px",
-            height: "10px",
-          }}
-        ></div>
+        <div className="d-flex align-items-center gap-2">
+          <div
+            className="bg-success rounded-circle"
+            style={{
+              width: "10px",
+              height: "10px",
+            }}
+          ></div>
+          <small className="text-muted">{t("friends.online")}</small>
+        </div>
       ) : (
-        <small className="text-muted">{time}</small>
+        <small className="text-muted">
+          {t("friends.lastActive", { time })}
+        </small>
       )}
     </div>
   );

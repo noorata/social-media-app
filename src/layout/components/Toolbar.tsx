@@ -2,10 +2,14 @@ import React from "react";
 import "../../assets/styles/Toolbar.scss";
 import { useAuth } from "../../auth/context/auth-store";
 import { Dropdown } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 const Toolbar: React.FC = () => {
   const { username, logout } = useAuth();
-  console.log("Toolbar username:", username);
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
 
   return (
     <div className="d-flex align-items-center gap-3">
@@ -41,10 +45,20 @@ const Toolbar: React.FC = () => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
+          <Dropdown.Header>{t("toolbar.language")}</Dropdown.Header>
+          <Dropdown.Item as="button" onClick={() => changeLanguage("en")}>
+            English
+          </Dropdown.Item>
+          <Dropdown.Item as="button" onClick={() => changeLanguage("ar")}>
+            العربية
+          </Dropdown.Item>
+
+          <Dropdown.Divider />
+
           {username ? (
             <>
               <Dropdown.ItemText className="text-dark fw-bold">
-                Welcome, {username}!
+                {t("welcome")}, {username}!
               </Dropdown.ItemText>
               <Dropdown.Divider />
               <Dropdown.Item
@@ -52,12 +66,12 @@ const Toolbar: React.FC = () => {
                 className="text-danger"
                 onClick={logout}
               >
-                Logout
+                {t("logout")}
               </Dropdown.Item>
             </>
           ) : (
             <Dropdown.ItemText className="text-muted">
-              Not logged in
+              {t("greeting")}, Guest
             </Dropdown.ItemText>
           )}
         </Dropdown.Menu>

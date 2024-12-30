@@ -5,16 +5,18 @@ import { Post } from "../posts.types";
 import { toast } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css";
 import clsx from "clsx";
+import { useTranslation } from "react-i18next";
 
 const PostDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const fetchPostDetails = async () => {
     if (!id) {
-      toast.error("Invalid Post ID!");
+      toast.error(t("postDetails.invalidId"));
       navigate("/posts-management");
       return;
     }
@@ -24,12 +26,12 @@ const PostDetails: React.FC = () => {
       if (fetchedPost) {
         setPost(fetchedPost);
       } else {
-        toast.error("Post not found!");
+        toast.error(t("postDetails.notFound"));
         navigate("/posts-management");
       }
     } catch (error) {
       console.error("Error fetching post:", error);
-      toast.error("Failed to load post details.");
+      toast.error(t("postDetails.failedLoad"));
     } finally {
       setLoading(false);
     }
@@ -40,11 +42,11 @@ const PostDetails: React.FC = () => {
   }, [id]);
 
   if (loading) {
-    return <div className="text-center mt-5">Loading post details...</div>;
+    return <div className="text-center mt-5">{t("postDetails.loading")}</div>;
   }
 
   if (!post) {
-    return <div className="text-center mt-5">No post found.</div>;
+    return <div className="text-center mt-5">{t("postDetails.noPost")}</div>;
   }
 
   return (
@@ -64,22 +66,31 @@ const PostDetails: React.FC = () => {
         <div className="row">
           <div className="col-md-6">
             <p>
-              <strong className="text-secondary">Description:</strong>
+              <strong className="text-secondary">
+                {t("postDetails.description")}:
+              </strong>
               <br />
-              {post.description || "No description provided."}
+              {post.description || t("postDetails.noDescription")}
             </p>
           </div>
 
           <div className="col-md-6">
             <p>
-              <strong className="text-secondary">Author:</strong> {post.author}
+              <strong className="text-secondary">
+                {t("postDetails.author")}:
+              </strong>{" "}
+              {post.author}
             </p>
             <p>
-              <strong className="text-secondary">Date Created:</strong>{" "}
+              <strong className="text-secondary">
+                {t("postDetails.dateCreated")}:
+              </strong>{" "}
               {new Date(post.dateCreated).toLocaleString()}
             </p>
             <p>
-              <strong className="text-secondary">Status:</strong>{" "}
+              <strong className="text-secondary">
+                {t("postDetails.status")}:
+              </strong>{" "}
               <span
                 className={clsx("badge", {
                   "bg-success": post.status === "published",
@@ -94,7 +105,7 @@ const PostDetails: React.FC = () => {
         </div>
 
         <div className="mt-4">
-          <strong className="text-secondary">Tags:</strong>
+          <strong className="text-secondary">{t("postDetails.tags")}:</strong>
           {post.tags.length > 0 ? (
             <div className="d-flex flex-wrap mt-2 gap-2">
               {post.tags.map((tag, index) => (
@@ -107,7 +118,7 @@ const PostDetails: React.FC = () => {
               ))}
             </div>
           ) : (
-            <p className="text-muted">No tags available</p>
+            <p className="text-muted">{t("postDetails.noTags")}</p>
           )}
         </div>
 
@@ -116,7 +127,7 @@ const PostDetails: React.FC = () => {
             className="btn btn-outline-secondary px-4 py-2"
             onClick={() => navigate("/posts-management")}
           >
-            &larr; Back to Posts
+            &larr; {t("postDetails.backToPosts")}
           </button>
         </div>
       </div>

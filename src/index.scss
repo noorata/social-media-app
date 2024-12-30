@@ -2,6 +2,7 @@
 @use './assets/styles/variables.scss' as *;
 @use './assets/styles/responsive.scss' as *;
 @use './assets/styles/fonts.scss';
+@use './assets/styles/rtl.scss';
 
 body {
   font-family: 'Roboto', sans-serif;

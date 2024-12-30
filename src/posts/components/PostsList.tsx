@@ -17,8 +17,10 @@ import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import Authorize from "../../auth/components/Authorize";
 import NewPost from "./NewPost";
+import { useTranslation } from "react-i18next";
 
 const PostsList: React.FC = () => {
+  const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     posts,
@@ -36,7 +38,7 @@ const PostsList: React.FC = () => {
       setPosts(allPosts);
       filterPosts(allPosts, statusFilter, searchFilter);
     } catch (error) {
-      toast.error("Failed to fetch posts, please try again");
+      toast.error(t("postsList.msg.fetchError"));
       console.error("Error fetching posts:", error);
     }
   };
@@ -57,12 +59,12 @@ const PostsList: React.FC = () => {
   //handle post deletion
   const handleDelete = async (id: number) => {
     const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "This post will be marked as deleted.",
+      title: t("postsList.deleteConfirm.title"),
+      text: t("postsList.deleteConfirm.text"),
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "Cancel",
+      confirmButtonText: t("postsList.deleteConfirm.confirmBtn"),
+      cancelButtonText: t("postsList.deleteConfirm.cancelBtn"),
       confirmButtonColor: "#dc3545",
       cancelButtonColor: "#6c757d",
     });
@@ -70,15 +72,15 @@ const PostsList: React.FC = () => {
       try {
         await removePost(id);
         Swal.fire(
-          "Deleted!",
-          "The post has been deleted successfully.",
+          t("postsList.deleteResult.title"),
+          t("postsList.deleteResult.text"),
           "success"
         );
         fetchPosts();
       } catch (error) {
         Swal.fire(
-          "Error",
-          "Failed to delete the post. Please try again.",
+          t("postsList.deleteError.title"),
+          t("postsList.deleteError.text"),
           "error"
         );
         console.error("Error deleting post:", error);
@@ -109,7 +111,7 @@ const PostsList: React.FC = () => {
           </span>
         ))
       ) : (
-        <span>No Tags</span>
+        <span>{t("postsList.noTags")}</span>
       )}
     </div>
   );
@@ -140,7 +142,7 @@ const PostsList: React.FC = () => {
         className="btn btn-danger btn-sm"
         onClick={() => handleDelete(rowData.id)}
       >
-        Delete
+        {t("postsList.btn.delete")}
       </button>
     </Authorize>
   );
@@ -162,12 +164,12 @@ const PostsList: React.FC = () => {
     <>
       <ToastContainer />
       <div className="container-fluid mt-4">
-        <h2 className="mb-4">Posts Management</h2>
+        <h2 className="mb-4">{t("postsList.title")}</h2>
         <button
           className="btn btn-success mb-3"
           onClick={() => setIsModalOpen(true)}
         >
-          Create New Post
+          {t("postsList.btn.createNew")}
         </button>
         {isModalOpen && (
           <div
@@ -178,7 +180,7 @@ const PostsList: React.FC = () => {
             <div className="modal-dialog modal-lg">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title">Create New Post</h5>
+                  <h5 className="modal-title">{t("postsList.createModal")}</h5>
                   <button
                     type="button"
                     className="btn-close"
@@ -206,25 +208,36 @@ const PostsList: React.FC = () => {
             className="shadow"
           >
             <Column field="id" header="ID" style={{ width: "5%" }}></Column>
-            <Column field="title" header="Title"></Column>
-            <Column field="description" header="Description"></Column>
+            <Column field="title" header={t("postsList.header.title")}></Column>
+            <Column
+              field="description"
+              header={t("postsList.header.description")}
+            ></Column>
             <Column
               field="dateCreated"
-              header="Created At"
+              header={t("postsList.header.createdAt")}
               body={dateTemplate}
             ></Column>
             <Column
               field="status"
-              header="Status"
+              header={t("postsList.header.status")}
               body={statusTemplate}
             ></Column>
-            <Column field="tags" header="Tags" body={tagsTemplate}></Column>
+            <Column
+              field="tags"
+              header={t("postsList.header.tags")}
+              body={tagsTemplate}
+            ></Column>
             <Column
               field="author"
-              header="Author"
+              header={t("postsList.header.author")}
               body={authorTemplate}
             ></Column>
-            <Column body={deleteTemplate} header="Actions"></Column>
+
+            <Column
+              body={deleteTemplate}
+              header={t("postsList.header.actions")}
+            ></Column>
 
             <Column
               body={(rowData) => (
@@ -232,10 +245,10 @@ const PostsList: React.FC = () => {
                   to={`/posts/${rowData.id}`}
                   className="btn btn-info btn-sm text-secondary"
                 >
-                  View Details
+                  {t("postsList.btn.viewDetails")}
                 </Link>
               )}
-              header="Details"
+              header={t("postsList.header.details")}
             />
           </DataTable>
         </div>

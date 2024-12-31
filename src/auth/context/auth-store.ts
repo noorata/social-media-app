@@ -4,7 +4,7 @@ import { login as loginService, logout as logoutService, getStoredUsername } fro
 export interface AuthContextType {
   username: string;
   role: "admin" | "user";
-  login: (username: string, role: "admin" | "user") => void;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -25,10 +25,15 @@ export const useAuthLogic = () => {
   const [username, setUsername] = useState(storedUserName.username);
   const [role, setRole] = useState(storedUserName.role);
 
-  const login = (username: string, role: "admin" | "user") => {
-    loginService(username, role);
-    setUsername(username);
-    setRole(role);
+  const login = async (email: string, password: string) => {
+    try {
+      const profile = await loginService(email, password);
+      setUsername(profile.name || "");
+      setRole(profile.role || "user");
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   };
 
   const logout = () => {

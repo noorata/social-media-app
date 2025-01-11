@@ -1,0 +1,17 @@
+[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+  
+    .navbar {
+      justify-content: flex-start !important;
+    }
+  
+    .sidebar {
+      text-align: right;
+    }
+  
+    .card {
+      text-align: right;
+    }
+  }
+  

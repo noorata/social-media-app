@@ -4,8 +4,10 @@ import PostCard from "./Post";
 import { Post } from "../posts.types";
 import { getPublishedPostsPaginated } from "../posts-api";
 import "../../assets/styles/responsive.scss";
+import { useTranslation } from "react-i18next";
 
 const RecentPosts: React.FC = () => {
+  const { t } = useTranslation();
   const [page, setPage] = useState<number>(1);
   const [posts, setPosts] = useState<Post[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
@@ -32,14 +34,18 @@ const RecentPosts: React.FC = () => {
         dataLength={posts.length}
         next={fetchPublishedPosts}
         hasMore={hasMore}
-        loader={<div className="text-center text-muted">Loading posts...</div>}
+        loader={
+          <div className="text-center text-muted">
+            {t("recentPosts.loadingPosts")}
+          </div>
+        }
         endMessage={
-          <p className="text-center text-muted">No more posts to show.</p>
+          <p className="text-center text-muted">{t("recentPosts.noMore")}</p>
         }
       >
         {posts.length === 0 ? (
           <div className="text-center text-muted">
-            No published posts available.
+            {t("recentPosts.noPosts")}
           </div>
         ) : (
           posts.map((post: Post) => (

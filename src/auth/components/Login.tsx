@@ -4,19 +4,26 @@ import { useNavigate } from "react-router-dom";
 import "../Login.scss";
 
 const Login: React.FC = () => {
-  const [username, setUsername] = useState("");
-  const [role, setRole] = useState<"admin" | "user">("user");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username.trim()) {
-      alert("Please enter a username.");
+
+    if (!email.trim() || !password.trim()) {
+      alert("Please enter both email and password.");
       return;
     }
-    login(username, role);
-    navigate("/");
+
+    try {
+      await login(email, password);
+      navigate("/");
+    } catch (err) {
+      alert("Login failed. Please check your credentials.");
+      console.error(err);
+    }
   };
 
   return (
@@ -28,43 +35,31 @@ const Login: React.FC = () => {
         </p>
         <form onSubmit={handleLogin}>
           <div className="mb-3">
-            <label htmlFor="username" className="form-label">
-              Username
+            <label htmlFor="email" className="form-label">
+              Email
             </label>
             <input
-              type="text"
-              id="username"
+              type="email"
+              id="email"
               className="form-control"
-              placeholder="Enter your username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
           <div className="mb-3">
-            <label className="form-label">Role</label>
-            <div>
-              <label className="me-3">
-                <input
-                  type="radio"
-                  name="role"
-                  value="admin"
-                  checked={role === "admin"}
-                  onChange={() => setRole("admin")}
-                />
-                Admin
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="role"
-                  value="user"
-                  checked={role === "user"}
-                  onChange={() => setRole("user")}
-                />
-                User
-              </label>
-            </div>
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              className="form-control"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
 
           <button type="submit" className="btn btn-primary w-100">
